@@ -4,7 +4,7 @@ import { users } from '../users'
 
 const App = () => {
     const [formData, setFormData] = useState({})
-    const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState({msg: ""})
 
     function handleChange(e){
         const {name, value} = e.target;
@@ -39,10 +39,10 @@ const App = () => {
         }
 
         else{
+            setErrors({msg: ""});
             setTimeout(() => {
                 console.log(user)
             }, 3000)
-            setErrors({});
         }
         
     }
@@ -57,7 +57,7 @@ const App = () => {
                     placeholder='Enter email'
                     onChange={handleChange}
                     value={formData.email}/>
-                {errors.email && (<p id="user-error">{errors.msg}</p>)}
+                <p id="user-error">{errors.msg}</p>
                 <input 
                     type="password"
                     name="password"
@@ -65,7 +65,7 @@ const App = () => {
                     placeholder='Enter password'
                     onChange={handleChange}
                     value={formData.password}/>
-                {errors.password && (<p id="password-error">{errors.msg}</p>)}
+                <p id="password-error">{errors.msg}</p>
                 <button id="submit-form-btn" type="submit">Submit</button>
             </form>
         </main>
