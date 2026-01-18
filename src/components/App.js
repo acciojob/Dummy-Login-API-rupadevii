@@ -12,7 +12,7 @@ const App = () => {
         setFormData((prev) => {
             return {
                 ...prev,
-                [name]: value
+                [name]: value.trim()
             }
         })
     }
@@ -23,20 +23,29 @@ const App = () => {
         let error = null
         const user = users.find(user => user.email === formData.email);
         if(!user) {
-            error = {email: true, msg: "User not found"};
+            error = {email: "User not found"};
+            setTimeout(() => {
+                setErrors(error)
+                console.log(error.email)
+            }, 3000)
+            return;
             
         }
 
         if(user && formData.password !== user.password){
-            error = {password: true, msg: "Password Incorrect"}
-        }
-
-        if(error){
+            error = {password: "Password Incorrect"};
             setTimeout(() => {
                 setErrors(error)
-                console.log(error.msg)
+                console.log(error.password)
             }, 3000)
         }
+
+        // if(error){
+        //     setTimeout(() => {
+        //         setErrors(error)
+        //         console.log(error)
+        //     }, 3000)
+        // }
 
         else{
             setErrors({msg: ""});
@@ -56,16 +65,18 @@ const App = () => {
                     id="input-email"
                     placeholder='Enter email'
                     onChange={handleChange}
-                    value={formData.email}/>
-                <p id="user-error">{errors.msg}</p>
+                    value={formData.email}
+                    required/>
+                <p id="user-error">{errors.email}</p>
                 <input 
                     type="password"
                     name="password"
                     id="input-password"
                     placeholder='Enter password'
                     onChange={handleChange}
-                    value={formData.password}/>
-                <p id="password-error">{errors.msg}</p>
+                    value={formData.password}
+                    required/>
+                <p id="password-error">{errors.password}</p>
                 <button id="submit-form-btn" type="submit">Submit</button>
             </form>
         </main>
